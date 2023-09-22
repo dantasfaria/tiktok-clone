@@ -1,5 +1,5 @@
 "use client";
-import MainLayout from './layouts/MainLayout'
+import MainLayout from "./layouts/MainLayout";
 
 export default function Home() {
   return (
@@ -8,5 +8,5 @@ export default function Home() {
         
       </MainLayout>
     </>
-  )
+  );
 }
