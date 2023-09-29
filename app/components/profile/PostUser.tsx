@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { PostUserCompTypes } from "@/app/types";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Link from "next/link";
+import { SiSoundcharts } from "react-icons/si"
+import { BiErrorCircle } from "react-icons/bi";
 
 function PostUser({ post }: PostUserCompTypes) {
 
@@ -37,6 +39,11 @@ function PostUser({ post }: PostUserCompTypes) {
         <p className="text-gra-700 text-[15px] pt-1 break-words">
           {post.text}
         </p>
+        <div className="flex items-center gap-1 -ml-1 text-gray-600 font-bold text-xs">
+          <SiSoundcharts size="15" />
+          3%
+          <BiErrorCircle size="16" />
+        </div>
       </div>
     </div>
   );
