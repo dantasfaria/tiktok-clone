@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
-import Register from './Register';
-import Login from './Login';
+import Register from './auth/Register';
+import Login from './auth/Login';
 
 function AuthOverlay() {
 
-    const [isRegistered, setIsRegistered] = useState<boolean>(true);
+    const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   return (
     <>

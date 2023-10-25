@@ -1,7 +1,7 @@
 import { ShowErrorObject } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import TextInput from "../profile/TextInput";
+import TextInput from "../TextInput";
 import { BiLoaderCircle } from "react-icons/bi";
 import { useUser } from "@/app/context/user";
 

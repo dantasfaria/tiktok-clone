@@ -1,4 +1,4 @@
-import AuthOverlay from "./components/auth/AuthOverlay";
+import AuthOverlay from "./components/AuthOverlay";
 import UserProvider from "./context/user";
 import "./globals.css";
 import type { Metadata } from "next";

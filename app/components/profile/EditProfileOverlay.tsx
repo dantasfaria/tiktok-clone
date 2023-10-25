@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsPencil } from 'react-icons/bs';
-import TextInput from './TextInput';
+import TextInput from '../TextInput';
 import { BiLoaderCircle } from 'react-icons/bi';
 
 function EditProfileOverlay() {
