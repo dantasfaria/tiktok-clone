@@ -1,4 +1,5 @@
 import AuthOverlay from "./components/auth/AuthOverlay";
+import UserProvider from "./context/user";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -14,10 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <AuthOverlay />
-        {children}
-      </body>
+      <UserProvider>
+        <body>
+          <AuthOverlay />
+          {children}
+        </body>
+      </UserProvider>
     </html>
   );
 }
