@@ -36,6 +36,7 @@ function EditProfileOverlay() {
         if(error && Object.entries(error).length > 0 && error?.type == type) {
             return error.message
         }
+        return ''
     };
 
     const cropAndUpdateImage = () => {
