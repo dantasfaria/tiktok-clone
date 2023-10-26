@@ -113,7 +113,12 @@ function TopNav() {
                         Profile
                       </span>
                     </button>
-                    <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
+                    <button
+                      onClick={async () => {
+                        await contextUser?.logout()
+                        setShowMenu(false)
+                      }}
+                      className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
                       <FiLogOut size="20" />
                       <span className="pl-2 font-semibold text-sm">
                         Log Out
