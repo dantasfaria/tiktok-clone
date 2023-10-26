@@ -1,4 +1,4 @@
-import AuthOverlay from "./components/AuthOverlay";
+import AllOverlays from "./components/AllOverlays";
 import UserProvider from "./context/user";
 import "./globals.css";
 import type { Metadata } from "next";
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <UserProvider>
         <body>
-          <AuthOverlay />
+          <AllOverlays />
           {children}
         </body>
       </UserProvider>
