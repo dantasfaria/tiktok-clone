@@ -67,7 +67,7 @@ function TopNav() {
               alt="tiktok logo"
             />
           </Link>
-          <div className="relative hidden md:flex items-center justify-end bg-[#F1F1F2] p-1 rounder-full max-w-[430px] w-full">
+          <div className="relative hidden md:flex items-center justify-end bg-[#F1F1F2] p-1 rounded-full max-w-[430px] w-full">
             <input
               type="text"
               onChange={handleSearchName}

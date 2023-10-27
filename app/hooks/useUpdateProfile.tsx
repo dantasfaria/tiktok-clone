@@ -13,6 +13,7 @@ const useUpdateProfile = async (id: string, name: string, bio: string) => {
         )
 
     } catch (error) {
+        console.log(error)
         throw error
     }
 }

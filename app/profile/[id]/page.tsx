@@ -1,34 +1,38 @@
 "use client";
 
 import ClientOnly from "@/app/components/ClientOnly";
-import EditProfileOverlay from "@/app/components/profile/EditProfileOverlay";
 import PostUser from "@/app/components/profile/PostUser";
+import { useUser } from "@/app/context/user";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
 import MainLayout from "@/app/layouts/MainLayout";
+import { useGeneralStore } from "@/app/stores/general";
+import { usePostStore } from "@/app/stores/post";
+import { useProfileStore } from "@/app/stores/profile";
 import { ProfilePageTypes } from "@/app/types";
+import { useEffect } from "react";
 import { BsPencil } from "react-icons/bs";
 
 function Profile({ params }: ProfilePageTypes) {
-  const currentProfile = {
-    id: "123",
-    user_id: "123",
-    name: "Gabriel Dantas",
-    image: "https://placehold.co/200",
-    bio: "this is the bio section!!!",
-  };
+  const contextUser = useUser();
+  let { postByUser, setPostsByUser } = usePostStore();
+  let { currentProfile, setCurrentProfile } = useProfileStore();
+  let { isEditProfileOpen, setIsEditProfileOpen } = useGeneralStore();
+
+  useEffect(() => {
+    setCurrentProfile(params?.id)
+    setPostsByUser(params?.id)
+  }, [])
 
   return (
     <>
       <MainLayout>
-        <ClientOnly>
-          <EditProfileOverlay />
-        </ClientOnly>
         <div className="pt-[90px] ml-[90px] 2xl:pl-[185px] lg:pl-[160px] lg:pr-0 w-[calc(100%-90px)] pr-3 max-w-[1800px] 2xl:mx-auto">
           <div className="flex w-[calc(100vw-230px)]">
             <ClientOnly>
-              {true ? (
+              {currentProfile ? (
                 <img
                   className="w-[120px] min-w-[120px] rounded-full"
-                  src={currentProfile.image}
+                  src={useCreateBucketUrl(currentProfile?.image)}
                   alt="user profile image"
                 />
               ) : (
@@ -50,8 +54,11 @@ function Profile({ params }: ProfilePageTypes) {
                   <div className="h-[60px]" />
                 )}
               </ClientOnly>
-              {true ? (
-                <button className="flex items-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100">
+              {contextUser?.user?.id == params?.id ? (
+                <button 
+                  onClick={() => setIsEditProfileOpen(isEditProfileOpen = !isEditProfileOpen)}
+                  className="flex items-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover:bg-gray-100"
+                >
                   <BsPencil className="mt-0.5 mr-1" size="18" />
                   <span>Edit profile</span>
                 </button>
@@ -83,13 +90,9 @@ function Profile({ params }: ProfilePageTypes) {
           </ul>
           <ClientOnly>
             <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gird-cols-2 gap-3">
-                <PostUser post={{
-                  id: '123',
-                  user_id: '345',
-                  video_url: '/glowingbeach.mp4',
-                  text: 'this is a post',
-                  created_at: 'date here'
-                }} />
+                {postByUser?.map((post, index) => (
+                  <PostUser key={index} post={post} />
+                ))}
             </div>
           </ClientOnly>
         </div>

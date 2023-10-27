@@ -88,7 +88,7 @@ function EditProfileOverlay() {
 
   const cropAndUpdateImage = async () => {
     let isError = validate();
-    if (!isError) return;
+    if (isError) return;
     if (!contextUser?.user) return;
 
     try {
@@ -152,7 +152,6 @@ function EditProfileOverlay() {
                         className="rounded-full"
                         width="95"
                         src={useCreateBucketUrl(userImage)}
-                        alt=""
                       />
                       <button className="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 inline-block w-[32px] h-32px]">
                         <BsPencil size="17" className="ml-0.5" />
@@ -211,17 +210,17 @@ function EditProfileOverlay() {
                         value={userBio || ""}
                         maxLength={80}
                         className="
-                                                resize-none
-                                                w-full
-                                                bg-[#F1F1F2]
-                                                text-gray-800
-                                                border
-                                                border-gray-300
-                                                rounded-md
-                                                py-2.5
-                                                px-3
-                                                focus:outline-none
-                                            "
+                          resize-none
+                          w-full
+                          bg-[#F1F1F2]
+                          text-gray-800
+                          border
+                          border-gray-300
+                          rounded-md
+                          py-2.5
+                          px-3
+                          focus:outline-none
+                        "
                       ></textarea>
                       <p className="text-[11px] text-gray-500">
                         {userBio ? userBio.length : 0}/80

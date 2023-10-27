@@ -38,7 +38,7 @@ const useChangeUserImage = async (file: File, cropper: any, currentImage: string
         return result?.$id 
 
     } catch(error) {
-
+        console.log(error)
         throw error
     }
 

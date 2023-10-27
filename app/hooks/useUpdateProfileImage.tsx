@@ -12,6 +12,7 @@ const useUpdateProfileImage = async (id: string, image: string) => {
         )
 
     } catch (error) {
+        console.log(error)
         throw error
     }
 }

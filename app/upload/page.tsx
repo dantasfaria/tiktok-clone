@@ -1,14 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadError } from "../types";
 import UploadLayout from "../layouts/UploadLayout";
 import { BiLoaderCircle, BiSolidCloudUpload } from "react-icons/bi";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { PiKnifeLight } from "react-icons/pi";
+import { useUser } from "../context/user";
+import useCreatePost from "../hooks/useCreatePost";
 
 function Upload() {
+  const contextUser = useUser()
+
   const router = useRouter();
 
   const [fileDisplay, setFileDisplay] = useState<string>("");
@@ -16,6 +20,10 @@ function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<UploadError | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!contextUser?.user) router.push('/');
+  }, [contextUser])
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -28,8 +36,37 @@ function Upload() {
     }
   };
 
-  const createNewPost = () => {
-    console.log("createNewPost");
+  const validate = () => {
+    setError(null)
+    let isError = false
+
+    if (!file) {
+      setError({ type: "File", message: "A video is required" })
+      isError = true
+    } else if (!caption) {
+      setError({ type: 'caption', message: "A caption is required" })
+      isError = true
+    } 
+
+    return isError
+  }
+
+  const createNewPost = async () => {
+    let isError = validate()
+    if (isError) return
+    if (!file || !contextUser?.user) return 
+
+    setIsUploading(true)
+
+    try {
+      await useCreatePost(file, contextUser?.user?.id, caption)
+      router.push(`/profile/${contextUser?.user?.id}`)
+      setIsUploading(false)
+    } catch (error) {
+      console.log(error)
+      setIsUploading(false)
+      alert(error)
+    }
   };
 
   const clearVideo = () => {

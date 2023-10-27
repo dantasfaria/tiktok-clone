@@ -5,7 +5,7 @@ async function useGetAllPosts () {
     try {
         const response = await database.listDocuments(
             "65392e6ccb70d171fa4e",
-            "653930c8771adff2319f",
+            "6539302a6c4d9c36ab32",
             [
                 Query.orderDesc("$id")
             ]   
