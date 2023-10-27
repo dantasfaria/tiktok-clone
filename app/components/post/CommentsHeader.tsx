@@ -18,6 +18,7 @@ import useCreateLike from "@/app/hooks/useCreateLike";
 import useDeleteLike from "@/app/hooks/useDeleteLike";
 import useDeletePostByID from "@/app/hooks/useDeletePostById";
 import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
+import moment from "moment";
 
 function CommentsHeader({ post, params }: CommentHeaderCompTypes) {
   let { likesByPost, setLikesByPost } = useLikeStore();
@@ -140,7 +141,7 @@ function CommentsHeader({ post, params }: CommentHeaderCompTypes) {
               <span className="relative -top-[2px] text-[30px] pl-1 pr-0.5">
                 .
               </span>
-              <span className="font-medium">{post?.created_at}</span>
+              <span className="font-medium">{moment(post?.created_at).calendar()}</span>
             </div>
           </div>
         </div>
@@ -170,13 +171,13 @@ function CommentsHeader({ post, params }: CommentHeaderCompTypes) {
               className="rounded-full bg-gray-200 p-2 cursor-pointer"
             >
               {!hasClickedLike ? (
-                <AiFillHeart size="25" />
+                <AiFillHeart color={likesByPost.length > 0 && userLiked ? '#ff2626' : ''} size="25" />
               ) : (
                 <BiLoaderCircle className="animate-spin" size="25" />
               )}
             </button>
             <span className="text-xs pl-2 pr-4 text-gray-800 font-semibold">
-              123
+              {likesByPost?.length}
             </span>
           </div>
         </ClientOnly>

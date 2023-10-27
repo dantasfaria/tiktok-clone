@@ -14,7 +14,7 @@ import { BsPencil } from "react-icons/bs";
 
 function Profile({ params }: ProfilePageTypes) {
   const contextUser = useUser();
-  let { postByUser, setPostsByUser } = usePostStore();
+  let { postsByUser, setPostsByUser } = usePostStore();
   let { currentProfile, setCurrentProfile } = useProfileStore();
   let { isEditProfileOpen, setIsEditProfileOpen } = useGeneralStore();
 
@@ -90,7 +90,7 @@ function Profile({ params }: ProfilePageTypes) {
           </ul>
           <ClientOnly>
             <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 gird-cols-2 gap-3">
-                {postByUser?.map((post, index) => (
+                {postsByUser?.map((post, index) => (
                   <PostUser key={index} post={post} />
                 ))}
             </div>
