@@ -5,6 +5,7 @@ import { Profile } from '../types';
 
 interface ProfileStore {
     currentProfile: Profile | null;
+    setCurrentProfile: (userId: string) => void;
 }
 
 export const useProfileStore = create<ProfileStore>() (

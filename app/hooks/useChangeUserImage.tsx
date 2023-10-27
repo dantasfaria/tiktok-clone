@@ -1,7 +1,7 @@
 import { storage } from '@/libs/AppWriteClient';
 import Image from 'image-js';
 
-async function useChangeUserImage (file: File, cropper: any, currentImage: string) {
+const useChangeUserImage = async (file: File, cropper: any, currentImage: string) => {
 
     let videoId = Math.random().toString(36).slice(2, 22);
 
