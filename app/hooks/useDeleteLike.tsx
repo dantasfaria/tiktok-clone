@@ -4,8 +4,8 @@ async function useDeleteLike (id: string) {
 
     try {
         await database.deleteDocument(
-            String(process.env.NEXT_PUBLIC_DATABASE_ID),
-            String(process.env.NEXT_PUBLIC_COLLECTION_ID_LIKE),
+            "65392e6ccb70d171fa4e",
+            "65392fa21c9c14a7605c",
             id,
             )
             

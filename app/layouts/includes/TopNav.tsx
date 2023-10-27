@@ -8,9 +8,12 @@ import { FiLogOut } from "react-icons/fi";
 import { useUser } from "@/app/context/user";
 import { useGeneralStore } from "@/app/stores/general";
 import { RandomUsers } from "@/app/types";
+import { debounce } from "debounce";
+import useSearchProfilesByName from "@/app/hooks/useSearchProfilebyName";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
 
 function TopNav() {
-  const contextUser = useUser()
+  const contextUser = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -19,15 +22,31 @@ function TopNav() {
 
   let { setIsLoginOpen, setIsEditProfileOpen } = useGeneralStore();
 
-  useEffect(() => { setIsEditProfileOpen(false) }, [])
+  useEffect(() => {
+    setIsEditProfileOpen(false);
+  }, []);
 
-  const handleSearchName = (event: { target: { value: string } }) => {
-    console.log(event.target.value);
-  };
+  const handleSearchName = debounce(
+    async (event: { target: { value: string } }) => {
+      if (event.target.value == "") return setSearchProfiles([]);
+
+      try {
+        const result = await useSearchProfilesByName(event.target.value);
+        if (result) return setSearchProfiles(result);
+        setSearchProfiles([]);
+      } catch (error) {
+        console.log(error);
+        setSearchProfiles([]);
+        alert(error);
+      }
+    },
+    500
+  );
+
   const goTo = () => {
-    if (!contextUser?.user) return setIsLoginOpen(true)
+    if (!contextUser?.user) return setIsLoginOpen(true);
 
-    router.push('/upload');
+    router.push("/upload");
   };
 
   return (
@@ -55,25 +74,28 @@ function TopNav() {
               className="w-full pl-3 my-2 bg-transparent placeholder-[#838383] text-[15px] focus:outline-none"
               placeholder="Search accounts"
             />
-
-            <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0 top-12 border p-1">
-              <div className="p-1">
-                <Link
-                  href={`/profile/1`}
-                  className="flex items-center justify-between w-full cursor-pointer hover:bg-[#F12B56] p-1 px-2 hover:text-white"
-                >
-                  <div className="flex items-center">
-                    <img
-                      className="rounded-md"
-                      width="40"
-                      src="https://placehold.co/400"
-                      alt=""
-                    />
-                    <div className="truncate ml-2">Gabriel Dantas</div>
+            {searchProfiles.length > 0 ? (
+              <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0 top-12 border p-1">
+                {searchProfiles.map((profile, index) => (
+                  <div className="p-1" key={index}>
+                    <Link
+                      href={`/profile/${profile?.id}`}
+                      className="flex items-center justify-between w-full cursor-pointer hover:bg-[#F12B56] p-1 px-2 hover:text-white"
+                    >
+                      <div className="flex items-center">
+                        <img
+                          className="rounded-md"
+                          width="40"
+                          src={useCreateBucketUrl(profile?.image)}
+                          alt=""
+                        />
+                        <div className="truncate ml-2">{ profile?.name }</div>
+                      </div>
+                    </Link>
                   </div>
-                </Link>
+                ))}
               </div>
-            </div>
+            ) : null}
             <div className="px-3 py-1 flex items-center border-l border-l-gray-300">
               <BiSearch color="#A1A2A7" size="22" />
             </div>
@@ -88,7 +110,10 @@ function TopNav() {
             </button>
             {!contextUser?.user?.id ? (
               <div className="flex items-center">
-                <button onClick={() => setIsLoginOpen(true)} className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px]">
+                <button
+                  onClick={() => setIsLoginOpen(true)}
+                  className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px]"
+                >
                   <span className="whitespace-nowrap mx-4 font-medium text-[15px]">
                     Log In
                   </span>
@@ -98,34 +123,43 @@ function TopNav() {
             ) : (
               <div className="flex items-center">
                 <div className="relative">
-                  <button onClick={() => setShowMenu(showMenu = !showMenu)} className="mt-1 border border-gray-200 rounded-full">
+                  <button
+                    onClick={() => setShowMenu((showMenu = !showMenu))}
+                    className="mt-1 border border-gray-200 rounded-full"
+                  >
                     <img
                       className="rounded-full w-[35px] h-[35px]"
-                      src="https://placehold.co/35"
+                      src={useCreateBucketUrl(contextUser?.user?.image)}
                       alt=""
                     />
                   </button>
-                {showMenu ? (
-                  <div className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[40px] right-0">
-                    <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
-                      <BiUser size="20" />
-                      <span className="pl-2 font-semibold text-sm">
-                        Profile
-                      </span>
-                    </button>
-                    <button
-                      onClick={async () => {
-                        await contextUser?.logout()
-                        setShowMenu(false)
-                      }}
-                      className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
-                      <FiLogOut size="20" />
-                      <span className="pl-2 font-semibold text-sm">
-                        Log Out
-                      </span>
-                    </button>
-                  </div>
-                ) : null}
+                  {showMenu ? (
+                    <div className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[40px] right-0">
+                      <button 
+                        onClick={() => {
+                          router.push(`/profile/${contextUser?.user?.id}`)
+                          setShowMenu(false)
+                        }}
+                        className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
+                        <BiUser size="20" />
+                        <span className="pl-2 font-semibold text-sm">
+                          Profile
+                        </span>
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await contextUser?.logout();
+                          setShowMenu(false);
+                        }}
+                        className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer"
+                      >
+                        <FiLogOut size="20" />
+                        <span className="pl-2 font-semibold text-sm">
+                          Log Out
+                        </span>
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             )}

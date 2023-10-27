@@ -14,13 +14,13 @@ async function useDeletePostByID (postId: string, currentImage: string) {
         comments.forEach(async comment => { await useDeleteComment(comment?.id) })
 
         await database.deleteDocument(
-            String(process.env.NEXT_PUBLIC_DATABASE_ID),
-            String(process.env.NEXT_PUBLIC_COLLECTION_ID_LIKE),
+            "65392e6ccb70d171fa4e",
+            "65392fa21c9c14a7605c",
             postId
         )
 
         await storage.deleteFile(
-            String(process.env.NEXT_PUBLIC_BUCKET_ID),
+            "653931b2dd59ca2a7d7c",
             currentImage
         )
             

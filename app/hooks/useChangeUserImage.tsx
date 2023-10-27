@@ -23,14 +23,14 @@ const useChangeUserImage = async (file: File, cropper: any, currentImage: string
         const finalFile = new File([ arrayBuffer ], file.name, { type: blob.type });
 
         const result = await storage.createFile(
-            String(process.env.NEXT_PUBLIC_BUCKET_ID),
+            "653931b2dd59ca2a7d7c",
             videoId,
             finalFile
         );
 
-        if (currentImage != String(process.env.NEXT_PUBLIC_PLACEHOLDER_DEFAULT_IMAGE_ID)) {
+        if (currentImage != "65393212f3a161559301") {
             await storage.deleteFile(
-                String(process.env.NEXT_PUBLIC_BUCKET_ID),
+                "653931b2dd59ca2a7d7c",
                 currentImage
             )
         };

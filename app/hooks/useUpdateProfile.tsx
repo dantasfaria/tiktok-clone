@@ -3,8 +3,8 @@ import { database } from "@/libs/AppWriteClient";
 const useUpdateProfile = async (id: string, name: string, bio: string) => {
     try {
         await database.updateDocument(
-            String(process.env.NEXT_PUBLIC_DATABASE_ID),
-            String(process.env.NEXT_PUBLIC_COLLECTION_ID_PROFILE),
+            "65392e6ccb70d171fa4e",
+            "65392e9269e344998ca9",
             id,
             {
                 name: name,

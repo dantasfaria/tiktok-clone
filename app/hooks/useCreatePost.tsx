@@ -6,8 +6,8 @@ async function useCreatePost (file: File, userId: string, caption: string) {
 
     try {
         await database.createDocument(
-            String(process.env.NEXT_PUBLIC_DATABASE_ID),
-            String(process.env.NEXT_PUBLIC_COLLECTION_ID_POST),
+            "65392e6ccb70d171fa4e",
+            "6539302a6c4d9c36ab32",
             ID.unique(),
                 {
                     user_id: userId,
@@ -18,7 +18,7 @@ async function useCreatePost (file: File, userId: string, caption: string) {
             )
 
             await storage.createFile(
-                String(process.env.NEXT_PUBLIC_BUCKET_ID),
+                "653931b2dd59ca2a7d7c",
                 videoId,
                 file
             )
