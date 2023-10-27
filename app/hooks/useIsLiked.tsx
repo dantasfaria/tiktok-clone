@@ -1,6 +1,6 @@
 import { Like } from "../types"
 
-async function useIsLiked (userId: string, postId: string, likes: Array<Like>) {
+function useIsLiked (userId: string, postId: string, likes: Array<Like>) {
     let res: Like[] = []
     likes?.forEach(like => {
         if( like.user_id == userId && like.post_id == postId) res.push(like)

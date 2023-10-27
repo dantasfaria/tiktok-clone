@@ -1,6 +1,6 @@
 
 
-async function useCreateBucket (fileId: string) {
+function useCreateBucketUrl (fileId: string) {
 
     const url = process.env.NEXT_PUBLIC_APPWRITE_URL;
     const id = process.env.NEXT_PUBLIC_BUCKET_ID;
@@ -12,4 +12,4 @@ async function useCreateBucket (fileId: string) {
 
 }
 
-export default useCreateBucket
+export default useCreateBucketUrl

@@ -148,5 +148,5 @@ export interface TextInputCompTypes {
   inputType: string;
   placeHolder: string;
   onUpdate: (newValue: string) => void;
-  error: string;
+  error: string | undefined;
 }
