@@ -56,7 +56,7 @@ function PostMain({ post }: PostMainCompTypes) {
         </p>
         <p className="text-[14px] pb-0.5 flex items-center font-semibold">
           <ImMusic size="17" />
-          <span className="px-1">original sound - AWESOME</span>
+          <span className="px-1">original sound</span>
           <AiFillHeart size="20" />
         </p>
         <div className="mt-2.5 flex">
