@@ -136,7 +136,7 @@ function Register() {
                 size={25}
               />
             ) : (
-              "Log In"
+              "Register"
             )}
           </button>
         </div>

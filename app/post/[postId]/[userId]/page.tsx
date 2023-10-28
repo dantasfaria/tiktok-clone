@@ -27,7 +27,7 @@ function Post({ params }: PostPageTypes) {
         setCommentsByPost(params.postId)
         setLikesByPost(params.postId)
         setPostsByUser(params.userId)
-    })
+    }, [])
 
     const loopThroughPostsUp = () => {
         postsByUser.forEach(post => {

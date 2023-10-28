@@ -115,7 +115,7 @@ function TopNav() {
                   className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px]"
                 >
                   <span className="whitespace-nowrap mx-4 font-medium text-[15px]">
-                    Log In
+                    Sign In
                   </span>
                 </button>
                 <BsThreeDotsVertical color="#161724" size="25" />

@@ -15,7 +15,7 @@ async function useDeletePostByID (postId: string, currentImage: string) {
 
         await database.deleteDocument(
             "65392e6ccb70d171fa4e",
-            "65392fa21c9c14a7605c",
+            "6539302a6c4d9c36ab32",
             postId
         )
 
